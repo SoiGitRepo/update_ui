@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:update_ui/name_change_nofitier.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,12 +9,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => NameChangeNofifier()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -21,9 +28,6 @@ class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
-
-  //define valueNotifier
-  final ValueNotifier<String> nameNotifier = ValueNotifier("siqiao");
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +42,20 @@ class MyHomePage extends StatelessWidget {
             Text(
               'You have changed the name to this:',
             ),
-            //use valueNotifier's value
-            ValueListenableBuilder(
-                valueListenable: nameNotifier,
-                builder: (context, value, child) {
-                  return Text(
-                    value,
-                    style: Theme.of(context).textTheme.headline4,
-                  );
-                }),
+            //use changeNotifier's value
+            Consumer<NameChangeNofifier>(
+                builder: (context, nameChangeNofifier, child) {
+              return Text(
+                nameChangeNofifier.name,
+                style: Theme.of(context).textTheme.headline4,
+              );
+            }),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 onSubmitted: (value) {
-                  //change value of notifier
-                  nameNotifier.value = value;
+                  //change value of changeNotifier
+                  context.read<NameChangeNofifier>().name = value;
                 },
               ),
             )
