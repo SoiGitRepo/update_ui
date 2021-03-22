@@ -1,6 +1,6 @@
 # update_ui
 
-A new Flutter project.
+A new Flutter project to learn updating ui.
 
 ## Getting Started
 
