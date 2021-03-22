@@ -27,7 +27,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String name = "siqiao";
+  //define valueNotifier
+  ValueNotifier<String> nameNotifier = ValueNotifier("siqiao");
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +43,21 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have changed the name to this:',
             ),
-            Text(
-              name,
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            //use valueNotifier's value
+            ValueListenableBuilder(
+                valueListenable: nameNotifier,
+                builder: (context, value, child) {
+                  return Text(
+                    value,
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                }),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 onSubmitted: (value) {
-                  //TODO submit change to 'name'.
+                  //change value of notifier
+                  nameNotifier.value = value;
                 },
               ),
             )
