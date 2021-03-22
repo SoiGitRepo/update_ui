@@ -46,10 +46,13 @@ class _MyHomePageState extends State<MyHomePage> {
               name,
               style: Theme.of(context).textTheme.headline4,
             ),
-            TextField(
-              onSubmitted: (value) {
-                //TODO submit change to 'name'.
-              },
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                onSubmitted: (value) {
+                  //TODO submit change to 'name'.
+                },
+              ),
             )
           ],
         ),
