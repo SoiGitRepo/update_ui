@@ -48,7 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextField(
               onSubmitted: (value) {
-                //TODO submit change to 'name'.
+                setState(() {
+                  name = value;
+                });
               },
             )
           ],
